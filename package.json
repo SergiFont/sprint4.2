@@ -4,17 +4,19 @@
   "description": "sample project for node",
   "main": "app.js",
   "scripts": {
-    "start": "node app/app.js",
-    "dev": "nodemon app/app.js",
+    "start": "set DEV=false&& node ./app/app.js",
+    "dev": "set DEV=true&& nodemon ./app/app.js",
     "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^9.0.2"
+    "basic-auth": "^2.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "jest": "^28.1.1"
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.7"
   }
 }
