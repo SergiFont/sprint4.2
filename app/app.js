@@ -3,6 +3,8 @@ const logger = require('./utils/logger.js')
 const playersRouter = require('./routes/players.js')
 const gamesRouter = require('./routes/games.js')
 const rankingRouter = require('./routes/ranking.js')
+const mysql = require('mysql2')
+const db = require('./models')
 
 const app = express()
 const port = process.env.DATABASE_PORT
@@ -21,6 +23,8 @@ app.use('/ranking', rankingRouter) // get, ranking de jugadores ordenado por % d
 // get, devuelve el jugador con peor porcentaje de éxito 
 // get, devuelve el jugador con mejor porcentaje de éxito
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+db.sequelize.sync().then((req)=> {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
 })
