@@ -13,8 +13,6 @@ exports.getGames = async (req, res) => {
 
 exports.createGame = async (req, res) => {
   const { name } = req.query;
-  console.log(typeof name)
-//   console.log(username)
   try {
     const game = await Games.create({ name }); // Create a new game record in the database using Sequelize
     sendResponse(res, 201, game); // Return the newly created game as JSON
