@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { getPlayers, createPlayer, updatePlayer} = require('./../controllers/players.js')
 
-router.route('/:username?')
+router.route('/:id?')
     .post(createPlayer) // crear jugador
     .get(getPlayers) // lista jugadores
     .put(updatePlayer) // modificar nombre jugador
