@@ -4,9 +4,10 @@ const playersRouter = require('./routes/players.js')
 const gamesRouter = require('./routes/games.js')
 const rankingRouter = require('./routes/ranking.js')
 const registerRouter = require('./routes/register.js')
+const loginRouter = require('./routes/login.js')
 const mysql = require('mysql2')
 const db = require('./models')
-const jwtMiddleware = require('./middlewares/jwt.js')
+const jwtMiddleware = require('./middlewares/verifyToken.js')
 
 const app = express()
 const port = process.env.DATABASE_PORT
@@ -16,6 +17,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(logger)
 
 app.use('/register', registerRouter)
+app.use('/login', loginRouter)
 
 app.use(jwtMiddleware)
 app.use('/players', playersRouter)
