@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { getGames, createGame, deleteGame} = require('./../controllers/games.js')
+const { getGames, createGame, deleteGames} = require('./../controllers/games.js')
 
 router.route('/:name?')
     .post(createGame)
-    .delete(deleteGame)
+    .delete(deleteGames)
     .get(getGames)
 
   module.exports = router
