@@ -27,7 +27,6 @@ exports.deleteGame = async (req, res) => {
   try {
     await Games.destroy({ where: { name } }); // Delete the game record from the database using Sequelize
     sendResponse(res, 204)
-    // res.sendStatus(204); // Return a success response with no content
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
