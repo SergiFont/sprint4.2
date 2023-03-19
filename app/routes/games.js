@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { getGames, createGame, deleteGames} = require('./../controllers/games.js')
 
-router.route('/:name?')
+router.route('/')
     .post(createGame)
     .delete(deleteGames)
     .get(getGames)

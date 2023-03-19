@@ -5,7 +5,7 @@ const gamesRouter = require('./routes/games.js')
 const rankingRouter = require('./routes/ranking.js')
 const registerRouter = require('./routes/register.js')
 const loginRouter = require('./routes/login.js')
-const mysql = require('mysql2')
+// const mysql = require('mysql2')
 const db = require('./models')
 const jwtMiddleware = require('./middlewares/verifyToken.js')
 

@@ -8,13 +8,8 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
-// const Players = require('./Players.js')
-// const Games = require('./Games.js')
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
-
-// Players.hasMany(Games, { as: 'games', foreignKey: 'playerId' });
-// Games.belongsTo(Players, { as: 'player', foreignKey: 'playerId' });
 
 fs
   .readdirSync(__dirname)
