@@ -8,6 +8,7 @@ const loginRouter = require('./routes/login.js')
 // const mysql = require('mysql2')
 const db = require('./models')
 const jwtMiddleware = require('./middlewares/verifyToken.js')
+const { createAdmin } = require('./helpers/createAdmin.js')
 
 const app = express()
 const port = process.env.DATABASE_PORT
@@ -25,8 +26,14 @@ app.use('/games', gamesRouter)
 app.use('/ranking', rankingRouter)
 
 
-db.sequelize.sync().then((req)=> {
-  app.listen(port, () => {
+db.sequelize.sync()
+  .then(() => {
+    console.log('Database synchronized')
+    return createAdmin()
+  })
+  .then(()=> {
+    console.log('Admin created succesfully')
+    app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
 })

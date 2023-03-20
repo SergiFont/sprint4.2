@@ -1,4 +1,4 @@
-const { Players } = require('../models'); // Import the Game model from Sequelize
+const { Players } = require('../models');
 const { ServerReply } = require('../utils/ServerReply.js')
 const { Validator } = require('../helpers/Validator.js')
 
@@ -11,9 +11,17 @@ exports.createPlayer = async (req, res) => {
       const validName = check.isValid(username)
       if (validName !== true) return runner.sendError(400, validName)
       const userOwnPlayer = await check.userHasPlayer(userId)
-      if (userOwnPlayer) return runner.sendError(403, 'You already got a player. Only one player per user.')
-      const player = await Players.create({userId, username}); // Create a new game record in the database using Sequelize
-      runner.sendResponse(201, player); // Return the newly created game as JSON
+      if (userOwnPlayer && userOwnPlayer?.username !== 'Anonymous') return runner.sendError(403, 'You already got a player. Only one player per user.')
+      if (await check.nameBeingUsed(username)) return runner.sendError(400, 'Name already in use.')
+      await check.updateUserRole(userId)
+      if (userOwnPlayer?.username === 'Anonymous') {
+        userOwnPlayer.username = username
+        await userOwnPlayer.save()
+        return runner.sendResponse(201, userOwnPlayer)
+      } else {
+        const player = await Players.create({userId, username}); // Create a player in the database using Sequelize
+        runner.sendResponse(201, player); // Return the newly created game as JSON
+      }
     } catch (err) {
       console.error(err);
       runner.sendError(500, 'Server error')

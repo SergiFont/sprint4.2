@@ -11,24 +11,24 @@ exports.loginUser = async (req, res) => {
     const { password } = req.body
     try {
         if (check.emptyUsername(user)) return runner.sendError(400, 'Enter a username please')
-        const userExist = await Users.findOne({
-            where: {
-                user
-            }
-        })
-        if (!userExist) return runner.sendError(404, 'Invalid user name')
+        const userExist = await check.userNameTaken(user)
+        if (!userExist) return runner.sendError(404, 'Username does not exist')
         const passwordIsValid = await userExist.verifyPassword(password)
         if (!passwordIsValid) return runner.sendError(401, 'Password does not match')
 
         const secretKey = 'your_secret_key'
 
         const payload = {
-            id: userExist.id
+            id: userExist.id,
         };
+        let role
+        userExist.role === 0 ? role = 'ADMIN' :
+        userExist.role === 1 ? role = 'PLAYER':
+        role = 'GUEST'
 
         const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
 
-        runner.sendResponse(200, { token, message: `Welcome Back, ${user}` })
+        runner.sendResponse(200, { token, message: `Welcome Back, ${user}`, role: `user level: ${role}` })
 
     } catch (error) {
         console.log(error)

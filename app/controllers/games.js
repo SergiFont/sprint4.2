@@ -1,24 +1,19 @@
 const { Games } = require('../models'); // Import the Game model from Sequelize
 const { Players } = require('../models');
 const { ServerReply } = require('../utils/ServerReply.js')
+const { Validator } = require('./../helpers/Validator.js')
+const { Game } = require('./../helpers/Game.js')
 
 // const runner = new ServerReply() 
 
 exports.getGames = async (req, res) => {
-  const runner = new ServerReply(res) 
+  const runner = new ServerReply(res)
+  const check = new Validator()
   const userId = req.user.id
   try {
-    const player = await Players.findOne({
-      where : {
-        userId : userId
-      }
-    })
-    console.log(player)
-    const games = await Games.findAll({
-      where : {
-        playerId : player.id
-      }
-    }); // Retrieve all games from the database using Sequelize
+    const player = await check.playerExist(userId)
+    if (!player) return runner.sendError(400, 'No games played.')
+    const games = await check.findGames(player.id) // Retrieve all games from the database using Sequelize
     runner.sendResponse(200, games) // Return the games as JSON
   } catch (err) {
     console.error(err);
@@ -28,22 +23,21 @@ exports.getGames = async (req, res) => {
 
 exports.createGame = async (req, res) => {
   const runner = new ServerReply(res)
+  const check = new Validator()
+  const newGame = new Game()
   const userId = req.user.id
   try {
-    const dice1 = Math.ceil(Math.random() * 6)
-    const dice2 = Math.ceil(Math.random() * 6)
-    const victory = dice1 + dice2 === 7 ? true : false
-    const player = await Players.findOne({
-      where : {
-        userId : userId
-      }
-    })
-    const playerId = player.id
+    let userHasPlayer = await check.playerExist(userId)
+    if (!userHasPlayer) {
+      await Players.create({userId, username: 'Anonymous'})
+      userHasPlayer = await check.playerExist(userId)
+    }
+    const {dice1, dice2, victory} = newGame.getGame()
+    const playerId = userHasPlayer.id
     const game = await Games.create({dice1, dice2, victory, playerId}); // Create a new game record in the database using Sequelize
-    console.log(Object.prototype.toString.call(game))
     runner.sendResponse(201, game); // Return the newly created game as JSON
   } catch (err) {
-    console.error(err);
+    console.log(err)
     runner.sendError(500, 'Server error') // Return an error response if something goes wrong
   }
 };

@@ -1,5 +1,6 @@
 const { Users } = require('../models')
 const { Players } = require('../models')
+const { Games } = require('../models')
 
 class Validator {
     constructor(){}
@@ -62,6 +63,31 @@ class Validator {
             }
         })
         return username
+    }
+
+    findGames = async subject => {
+        const games = await Games.findAll({
+            where: {
+                playerId: subject
+            }
+        })
+        return games
+    }
+
+    findUser = async subject => {
+        const user = await Users.findOne({
+            where: {
+                id: subject
+            }
+        })
+        return user
+    }
+
+    updateUserRole = async subject => {
+        const user = await this.findUser(subject)
+        if (user.role === 1 || user.role === 0) return 
+        user.role = 1
+        await user.save()
     }
 }
 

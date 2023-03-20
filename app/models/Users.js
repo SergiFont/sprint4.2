@@ -25,8 +25,16 @@ module.exports = (sequelize, DataTypes) => {
         validate : {
             notEmpty: true
         }
+      },
+      role: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 2,
+        validate : {
+          notEmpty: true
+        }
       }
-    });
+    }); // 0 = 'admin', 1 = 'player', 2 = 'guest'
 
     Users.associate = (models) => {
         Users.hasOne(models.Players, { as: 'player', foreignKey: 'userId' });

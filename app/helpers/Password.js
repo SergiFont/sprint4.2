@@ -7,7 +7,7 @@ class Password {
         return bcrypt.compare(password, userPassword)
     }
 
-    storePassword = async function(password) {
+    cryptPassword = async function(password) {
         return bcrypt.hash(password, 10)
     }
 }

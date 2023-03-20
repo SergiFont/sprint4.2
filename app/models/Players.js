@@ -11,9 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        unique: true,
-        allowNull: true,
-        defaultValue: null
+        allowNull: false,
+        unique: false,
+        validate: {
+          notEmpty: true
+        }
       },
     });
 

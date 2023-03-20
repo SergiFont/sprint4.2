@@ -14,7 +14,7 @@ exports.createUser = async (req, res) => {
         if (validUser !== true) return runner.sendError(400, validUser)
         const wantedName = await check.userNameTaken(user)
         if(wantedName) return runner.sendError(400, 'User name already used.')
-        password = await p.storePassword(password)
+        password = await p.cryptPassword(password)
         await Users.create({user, password})
         runner.sendResponse(200, 'User created succesfully')
         
