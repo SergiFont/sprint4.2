@@ -14,4 +14,4 @@ class ServerReply {
     }
 }
 
-module.exports = { ServerReply }
+module.exports = ServerReply 

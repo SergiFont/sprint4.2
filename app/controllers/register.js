@@ -1,25 +1,36 @@
 const { Users } = require('../models');
-const {ServerReply} = require('../utils/ServerReply.js')
-const {Validator} = require('../helpers/Validator.js')
-const {Password} = require('./../helpers/Password.js')
+const ServerReply = require('../utils/ServerReply.js')
+const Username = require('./../helpers/Username.js')
+const Password = require('./../helpers/Password.js')
+const UserExistException = require('./../helpers/exceptions/UserExistException.js')
 
 exports.createUser = async (req, res) => {
-    const check = new Validator()
+    const { user } = req.body
+    const { password } = req.body
+    // aqui se validaria user y password
     const runner = new ServerReply(res)
-    const p = new Password()
-    const {user} = req.body
-    let {password} = req.body
+
     try {
-        const validUser = check.isValid(user)
-        if (validUser !== true) return runner.sendError(400, validUser)
-        const wantedName = await check.userNameTaken(user)
-        if(wantedName) return runner.sendError(400, 'User name already used.')
-        password = await p.cryptPassword(password)
-        await Users.create({user, password})
+        const username = new Username(user)
+        const userExist = await Users.findOne({ where: { user: username.getUsername() } })
+        if (userExist) throw new UserExistException('User name already used')
+
+        const pass = new Password()
+        await pass.cryptPassword(password)
+        const securedPassword = pass.getPassword()
+
+        await Users.create({ user, password: securedPassword })
         runner.sendResponse(200, 'User created succesfully')
-        
+
     } catch (error) {
+        const report = runner.sendError(400, error.message)
         console.log(error)
-        runner.sendError(500, 'Server error')
+        return  error.constructor.name === 'NotValidUsernameException' ?
+                report :
+                error.constructor.name === 'UserExistException' ?
+                report :
+                error.constructor.name === 'NotValidPasswordException' ?
+                report :
+                runner.sendError(500, 'Server error')
     }
 }

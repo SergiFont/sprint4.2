@@ -1,13 +1,13 @@
 const { Users } = require('../models')
 const { Validator } = require('./../helpers/Validator.js')
-const { Password } = require('./../helpers/Password.js')
+const CrypterService = require('./../helpers/CrypterService.js')
 
 const createAdmin = async () => {
     const check = new Validator()
-    const p = new Password()
+    const crypterService = new CrypterService()
     const admin = await check.userNameTaken('admin')
     if (!admin) {
-        const password = await p.cryptPassword('admin')
+        const password = await crypterService.generateCrypt('admin')
         await Users.create({
             user: 'admin',
             password,
@@ -16,10 +16,4 @@ const createAdmin = async () => {
     }
 }
 
-module.exports = { createAdmin }
-
-// const admin = await Models.User.findOne({where: {name: 'Admin'}})
-//         if(admin === null){
-//             const adminPswd = await encrypt(chatAdminPswd)
-//             await Models.User.create({name: 'Admin', password: adminPswd, level: 0})
-//         }
+module.exports = createAdmin

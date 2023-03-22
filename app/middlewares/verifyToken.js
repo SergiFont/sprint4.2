@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { Users } = require('../models')
-const { ServerReply } = require('../utils/ServerReply.js')
+const ServerReply = require('../utils/ServerReply.js')
 
 const secretKey = 'your_secret_key'
 

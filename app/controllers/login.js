@@ -1,37 +1,41 @@
 const { Users } = require('../models')
-const { ServerReply } = require('../utils/ServerReply.js')
-const jwt = require('jsonwebtoken')
-const { Validator } = require('../helpers/Validator.js')
-
+const ServerReply = require('../utils/ServerReply.js')
+const Username = require('./../helpers/Username.js')
+const UserNotExistException = require('./../helpers/exceptions/UserNotExistException.js')
+const NotMatchingPasswordException = require('./../helpers/exceptions/NotMatchingPasswordException.js')
+const Token = require('./../helpers/Token.js')
 
 exports.loginUser = async (req, res) => {
-    const runner = new ServerReply(res)
-    const check = new Validator()
     const { user } = req.body
     const { password } = req.body
+    const runner = new ServerReply(res)
+
     try {
-        if (check.emptyUsername(user)) return runner.sendError(400, 'Enter a username please')
-        const userExist = await check.userNameTaken(user)
-        if (!userExist) return runner.sendError(404, 'Username does not exist')
+        new Username(user)
+        const userExist = await Users.findOne({where: {user}})
+        if (!userExist) throw new UserNotExistException('Username does not exist')
+
         const passwordIsValid = await userExist.verifyPassword(password)
-        if (!passwordIsValid) return runner.sendError(401, 'Password does not match')
+        if (!passwordIsValid) throw new NotMatchingPasswordException('Password does not match')
+        
+        const token = new Token(userExist.id)
+        const userToken = token.getToken()
 
-        const secretKey = 'your_secret_key'
-
-        const payload = {
-            id: userExist.id,
-        };
         let role
         userExist.role === 0 ? role = 'ADMIN' :
         userExist.role === 1 ? role = 'PLAYER':
         role = 'GUEST'
-
-        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
-
-        runner.sendResponse(200, { token, message: `Welcome Back, ${user}`, role: `user level: ${role}` })
+        runner.sendResponse(200, { token: userToken, message: `Welcome Back, ${user}`, role: `user level: ${role}` })
 
     } catch (error) {
+        const report = runner.sendError(400, error.message)
         console.log(error)
-        runner.sendError(500, 'Server error')
+        return  error.constructor.name === 'NotValidUsernameException' ?
+                report :
+                error.constructor.name === 'UserNotExistException' ?
+                report :
+                error.constructor.name === 'NotMatchingPasswordException' ?
+                report :
+                runner.sendError(500, 'Server error')
     }
 }

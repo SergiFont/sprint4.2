@@ -1,6 +1,7 @@
 const Players = require('./Players.js')
 // const { Validator } = require('../helpers/Validator.js')
-const { Password } = require('./../helpers/Password.js')
+// const { Password } = require('./../helpers/Password.js')
+const CrypterService = require('./../helpers/CrypterService.js')
 // const bcrypt = require('bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
@@ -39,9 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     Users.associate = (models) => {
         Users.hasOne(models.Players, { as: 'player', foreignKey: 'userId' });
     };
-    const p = new Password()
+    const crypterService = new CrypterService()
     Users.prototype.verifyPassword = async function(password){
-      return await p.checkPassword(password, this.password)
+      return await crypterService.validate(password, this.password)
     }
     
     return Users;

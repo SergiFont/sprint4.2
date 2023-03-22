@@ -8,7 +8,7 @@ const loginRouter = require('./routes/login.js')
 // const mysql = require('mysql2')
 const db = require('./models')
 const jwtMiddleware = require('./middlewares/verifyToken.js')
-const { createAdmin } = require('./helpers/createAdmin.js')
+const createAdmin = require('./helpers/createAdmin.js')
 
 const app = express()
 const port = process.env.DATABASE_PORT
