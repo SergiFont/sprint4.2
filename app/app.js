@@ -1,5 +1,5 @@
 const express = require('express')
-const logger = require('./utils/logger.js')
+const logger = require('./middlewares/logger.js')
 const playersRouter = require('./routes/players.js')
 const gamesRouter = require('./routes/games.js')
 const rankingRouter = require('./routes/ranking.js')

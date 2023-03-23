@@ -1,7 +1,7 @@
 const { Games } = require('../models'); // Import the Game model from Sequelize
 const { Players } = require('../models');
 const ServerReply = require('../utils/ServerReply.js')
-const { Validator } = require('./../helpers/Validator.js')
+const showDevError = require('./../utils/showDevError.js')
 
 /*
 GET /ranking: retorna un ranking de jugadors/es ordenat per percentatge d'èxits i el percentatge d’èxits mig del conjunt de tots els jugadors/es.
@@ -53,7 +53,7 @@ exports.getRanking = async (req, res) => {
         res.json(200, {general_ranking:`Percentatge of wins for all the player base: ${victoryPercentageAll}%.`}, {player_ranking: `Percentatge of wins per player: ${await showResult()}`})
         
     } catch (error) {
-        console.log(error)
+        showDevError(error)
         runner.sendError(500, 'Server error')
     }
 }

@@ -1,21 +1,27 @@
-const { Users } = require('../models')
+// const { Users } = require('../models')
 const ServerReply = require('../utils/ServerReply.js')
 const Username = require('./../helpers/Username.js')
 const UserNotExistException = require('./../helpers/exceptions/UserNotExistException.js')
 const NotMatchingPasswordException = require('./../helpers/exceptions/NotMatchingPasswordException.js')
 const Token = require('./../helpers/Token.js')
+const showDevError = require('./../utils/showDevError.js')
+const UsersRepositoryMysql = require('./../class/users/UsersRepositoryMysql.js')
 
 exports.loginUser = async (req, res) => {
-    const { user } = req.body
-    const { password } = req.body
-    const runner = new ServerReply(res)
-
+    
     try {
+        const { user } = req.body
+        const { password } = req.body
+        const runner = new ServerReply(res)
+        const users = new UsersRepositoryMysql()
+
         new Username(user)
-        const userExist = await Users.findOne({where: {user}})
+        const userExist = await users.findByName(user)
+        console.log(userExist)
         if (!userExist) throw new UserNotExistException('Username does not exist')
 
-        const passwordIsValid = await userExist.verifyPassword(password)
+        const passwordIsValid = await userExist.verifyPassword(password) // esto habrá que modificarlo para ser mas general,
+        // en caso de usar otra base de datos distinta como Mongo.
         if (!passwordIsValid) throw new NotMatchingPasswordException('Password does not match')
         
         const token = new Token(userExist.id)
@@ -28,14 +34,14 @@ exports.loginUser = async (req, res) => {
         runner.sendResponse(200, { token: userToken, message: `Welcome Back, ${user}`, role: `user level: ${role}` })
 
     } catch (error) {
-        const report = runner.sendError(400, error.message)
-        console.log(error)
+        const runner = new ServerReply(res)
+        showDevError(error)
         return  error.constructor.name === 'NotValidUsernameException' ?
-                report :
+                runner.sendError(400, error.message) :
                 error.constructor.name === 'UserNotExistException' ?
-                report :
+                runner.sendError(400, error.message) :
                 error.constructor.name === 'NotMatchingPasswordException' ?
-                report :
+                runner.sendError(400, error.message) :
                 runner.sendError(500, 'Server error')
     }
 }
