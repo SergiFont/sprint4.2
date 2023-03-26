@@ -1,4 +1,4 @@
-const { Games } = require('../../models')
+const { Games } = require('../../../models')
 
 class GamesRepositoryMysql {
     async findPlayerGames(playerId) {
@@ -11,6 +11,10 @@ class GamesRepositoryMysql {
 
     async deleteGames(playerId) {
         await Games.destroy({where: {playerId} })
+    }
+
+    async findAllGames() {
+        return await Games.findAll()
     }
 }
 

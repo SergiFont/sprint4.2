@@ -8,7 +8,7 @@ class Token {
         const payload = {
             id
         }
-        this.#token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
+        this.#token = jwt.sign(payload, secretKey, { expiresIn: '10h' })
     }
 
     getToken() {

@@ -1,11 +1,10 @@
-// const { Users } = require('../models')
-const ServerReply = require('../utils/ServerReply.js')
-const Username = require('./../helpers/Username.js')
-const UserNotExistException = require('./../helpers/exceptions/UserNotExistException.js')
-const NotMatchingPasswordException = require('./../helpers/exceptions/NotMatchingPasswordException.js')
-const Token = require('./../helpers/Token.js')
-const showDevError = require('./../utils/showDevError.js')
-const UsersRepositoryMysql = require('./../class/users/UsersRepositoryMysql.js')
+const ServerReply = require('../helpers/ServerReply.js')
+const Username = require('../entities/Username.js')
+const UserNotExistException = require('../helpers/exceptions/UserNotExistException.js')
+const NotMatchingPasswordException = require('../helpers/exceptions/NotMatchingPasswordException.js')
+const Token = require('../entities/Token.js')
+const showDevError = require('../helpers/showDevError.js')
+const UsersRepositoryMysql = require('../entities/repositories/users/UsersRepositoryMysql.js')
 
 exports.loginUser = async (req, res) => {
     
@@ -17,7 +16,6 @@ exports.loginUser = async (req, res) => {
 
         new Username(user)
         const userExist = await users.findByName(user)
-        console.log(userExist)
         if (!userExist) throw new UserNotExistException('Username does not exist')
 
         const passwordIsValid = await userExist.verifyPassword(password) // esto habrá que modificarlo para ser mas general,

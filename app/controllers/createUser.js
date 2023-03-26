@@ -1,10 +1,9 @@
-// const { Users } = require('../models')
-const ServerReply = require('../utils/ServerReply.js')
-const Username = require('./../helpers/Username.js')
-const Password = require('./../helpers/Password.js')
-const UserExistException = require('./../helpers/exceptions/UserExistException.js')
-const showDevError = require('./../utils/showDevError.js')
-const UsersRepositoryMysql = require('./../class/users/UsersRepositoryMysql.js')
+const ServerReply = require('../helpers/ServerReply.js')
+const Username = require('../entities/Username.js')
+const Password = require('../entities/Password.js')
+const UserExistException = require('../helpers/exceptions/UserExistException.js')
+const showDevError = require('../helpers/showDevError.js')
+const UsersRepositoryMysql = require('../entities/repositories/users/UsersRepositoryMysql.js')
 
 exports.createUser = async (req, res) => {
     

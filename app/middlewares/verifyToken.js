@@ -1,13 +1,15 @@
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 const { Users } = require('../models')
-const ServerReply = require('../utils/ServerReply.js')
-const showDevError = require('./../utils/showDevError.js')
+const ServerReply = require('../helpers/ServerReply.js')
+const showDevError = require('./../helpers/showDevError.js')
 const UserNotExistException = require('./../helpers/exceptions/UserNotExistException.js')
 const AuthorizationHeaderMissingException = require('./../helpers/exceptions/AuthorizationHeaderMissingException.js')
 
-const secretKey = 'your_secret_key'
 
-const jwtMiddleware = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
+  // const secretKey = 'your_secret_key'
+  const secretKey = process.env.TOKEN_KEY
   const authorizationHeader = req.headers.authorization
   const runner = new ServerReply(res)
   
@@ -41,4 +43,4 @@ const jwtMiddleware = async (req, res, next) => {
   }
 }
 
-module.exports = jwtMiddleware
+module.exports = verifyToken

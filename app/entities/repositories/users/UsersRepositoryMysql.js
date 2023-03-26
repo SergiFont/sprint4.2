@@ -1,4 +1,4 @@
-const { Users } = require('../../models')
+const { Users } = require('../../../models')
 
 class UsersRepositoryMysql {
     async findByName(name) {

@@ -1,4 +1,4 @@
-const NotValidPasswordException = require('./exceptions/NotValidPasswordException.js')
+const NotValidPasswordException = require('../helpers/exceptions/NotValidPasswordException.js')
 const CrypterService = require('./../helpers/CrypterService.js')
 
 class Password {

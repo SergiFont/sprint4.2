@@ -1,4 +1,4 @@
-const { Players } = require('../../models')
+const { Players } = require('../../../models')
 
 class PlayersRepositoryMysql {
     async findByName(name) {
@@ -20,6 +20,10 @@ class PlayersRepositoryMysql {
 
     async findAllPlayers() {
         return await Players.findAll()
+    }
+
+    async findByPlayerId(id) {
+        return await Players.findOne({where: {id}})
     }
 }
 

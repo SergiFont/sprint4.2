@@ -1,4 +1,4 @@
-const NotValidUsernameException = require('./exceptions/NotValidUsernameException.js')
+const NotValidUsernameException = require('../helpers/exceptions/NotValidUsernameException.js')
 
 class Player {
     #name

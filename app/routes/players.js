@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { getPlayers, createPlayer, updatePlayer} = require('./../controllers/players.js')
+const createPlayer = require ('./../controllers/players/createPlayer.js')
+const getPlayers = require ('./../controllers/players/getPlayers.js')
+const updatePlayer = require ('./../controllers/players/updatePlayer.js')
 
 router.route('/')
     .post(createPlayer) // crear jugador
