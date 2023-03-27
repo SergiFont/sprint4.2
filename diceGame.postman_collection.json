@@ -10,14 +10,7 @@
 			"name": "createGame",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJNYW5vbG8iLCJpYXQiOjE2Nzg5MDE4NjMsImV4cCI6MTY3ODkwNTQ2M30.YYCtJ05_9fIXu0Yd5i945nxQBPVg7719zKYC3ttjrmQ",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [],
@@ -42,14 +35,7 @@
 			"name": "deleteGame",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJNYW5vbG8iLCJpYXQiOjE2Nzg5MDE4NjMsImV4cCI6MTY3ODkwNTQ2M30.YYCtJ05_9fIXu0Yd5i945nxQBPVg7719zKYC3ttjrmQ",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "DELETE",
 				"header": [],
@@ -71,14 +57,7 @@
 			"name": "getGames",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJQZXBpdG8iLCJpYXQiOjE2Nzg4OTgwODcsImV4cCI6MTY3ODkwMTY4N30.hv5nhEX8nx6Zpy2FD6h3LEVrK7p29gomA3cV9ZLvTXU",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -99,19 +78,12 @@
 			"name": "createPlayer",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJNYW5vbG8iLCJpYXQiOjE2Nzg5MDE4NjMsImV4cCI6MTY3ODkwNTQ2M30.YYCtJ05_9fIXu0Yd5i945nxQBPVg7719zKYC3ttjrmQ",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000/players?username=GodPlayer",
+					"raw": "localhost:3000/players?username=",
 					"host": [
 						"localhost"
 					],
@@ -122,7 +94,7 @@
 					"query": [
 						{
 							"key": "username",
-							"value": "GodPlayer"
+							"value": ""
 						}
 					]
 				}
@@ -133,14 +105,7 @@
 			"name": "listPlayers",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJQZXBpdG8iLCJpYXQiOjE2Nzg4OTgwODcsImV4cCI6MTY3ODkwMTY4N30.hv5nhEX8nx6Zpy2FD6h3LEVrK7p29gomA3cV9ZLvTXU",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
@@ -161,14 +126,7 @@
 			"name": "modifyPlayerName",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJQZXBpdG8iLCJpYXQiOjE2Nzg4OTgwODcsImV4cCI6MTY3ODkwMTY4N30.hv5nhEX8nx6Zpy2FD6h3LEVrK7p29gomA3cV9ZLvTXU",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "PUT",
 				"header": [],
@@ -177,7 +135,7 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "localhost:3000/players?newPlayername=New Name",
+					"raw": "localhost:3000/players?username=",
 					"host": [
 						"localhost"
 					],
@@ -187,8 +145,8 @@
 					],
 					"query": [
 						{
-							"key": "newPlayername",
-							"value": "New Name"
+							"key": "username",
+							"value": ""
 						}
 					]
 				}
@@ -205,12 +163,12 @@
 					"urlencoded": [
 						{
 							"key": "user",
-							"value": "Manolo",
+							"value": "",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "secreto",
+							"value": "",
 							"type": "text"
 						}
 					]
@@ -238,12 +196,12 @@
 					"urlencoded": [
 						{
 							"key": "user",
-							"value": "Manolo",
+							"value": "",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "secreto",
+							"value": "",
 							"type": "text"
 						}
 					]
@@ -264,24 +222,65 @@
 		{
 			"name": "getRanking",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/ranking",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ranking"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "getBestPlayer",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/ranking/winner",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ranking",
+						"winner"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "getWorstPlayer",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/ranking/loser",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ranking",
+						"loser"
+					]
+				}
 			},
 			"response": []
 		}
