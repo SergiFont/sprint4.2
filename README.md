@@ -18,7 +18,7 @@ Creamos un schema con el nombre que deseemos para la base de datos.
 En el proyecto, buscamos el archivo config.json './app/config/config.json'. En el archivo, hay que modificar 'username', 'password', 'database' y 'host' por los nuestros. Si has usado el server que viene por defecto, solo necesitas cambiar la password por la tuya de MySql y la database con el nombre que le hayas dado al schema creado en el punto anterior.
 Ahora las variables de entorno. Buscamos en el proyecto el archivo .env-template, y lo modificamos para que quede así: '.env' sin las comillas. En este archivo solo debemos modificar 'SERVER_PORT' por el puerto donde queramos conectar el servidor de la API. No necesitarás acordarte, asi que no te preocupes.
 
-- QUINTO Y ÚLTIMO. Ejecutar en la consola, de nuevo en la raíz del proyecto, el comando 'npm start' para iniciar el server.
+- QUINTO Y ÚLTIMO. Ejecutar en la consola, de nuevo en la raíz del proyecto, el comando 'npm start' para iniciar el server con base de datos MySql. Más adelante habrá la opción de ejecutarlo con base de datos MongoDb.
 
 - Está todo listo para probar las request en postman.
 
