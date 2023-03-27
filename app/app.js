@@ -20,7 +20,6 @@ app.use(logger)
 app.use('/register', registerRouter)
 app.use('/login', loginRouter)
 
-// TODO añadir middlwware para verificar que se manda un Auth header.
 app.use(verifyToken)
 app.use('/players', playersRouter)
 app.use('/games', gamesRouter)

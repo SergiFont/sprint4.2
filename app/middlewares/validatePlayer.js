@@ -1,7 +1,8 @@
 const ServerReply = require('../helpers/ServerReply.js')
 
 const validatePlayer = (req, res, next) => {
-    const { username } = req.body
+    const { username } = req.query
+    console.log(username)
   
     if (!username) {
         const runner = new ServerReply(res)

@@ -3,8 +3,8 @@ const Player  = require('./../../entities/Player.js')
 const UserAlreadyHasPlayerException  = require('./../../helpers/exceptions/UserAlreadyHasPlayerException.js')
 const PlayerNameTakenException  = require('./../../helpers/exceptions/PlayerNameTakenException.js')
 const showDevError = require('./../../helpers/showDevError.js')
-const UsersRepositoryMysql = require('./../../entities/repositories/users/UsersRepositoryMysql.js')
-const PlayersRepositoryMysql = require('./../../entities/repositories/players/PlayersRepositoryMysql.js')
+const { users } = require('./../../entities/repositories/choosenDb.js')
+const { players } = require('./../../entities/repositories/choosenDb.js')
 
 const createPlayer = async (req, res) => {
   
@@ -12,8 +12,6 @@ const createPlayer = async (req, res) => {
       const userId = req.user.id
       const { username } = req.query
       const runner = new ServerReply(res)
-      const users = new UsersRepositoryMysql()
-      const players = new PlayersRepositoryMysql()
       const playerName = new Player(username)
 
       const userOwnPlayer = await players.findById(userId)

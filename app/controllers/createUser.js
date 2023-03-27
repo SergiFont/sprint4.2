@@ -3,14 +3,13 @@ const Username = require('../entities/Username.js')
 const Password = require('../entities/Password.js')
 const UserExistException = require('../helpers/exceptions/UserExistException.js')
 const showDevError = require('../helpers/showDevError.js')
-const UsersRepositoryMysql = require('../entities/repositories/users/UsersRepositoryMysql.js')
+const { users } = require('./../entities/repositories/choosenDb.js')
 
 exports.createUser = async (req, res) => {
     
     try {
         const { user, password } = req.body
         const runner = new ServerReply(res)
-        const users = new UsersRepositoryMysql()
         const username = new Username(user)
         
         const userExist = await users.findByName(username.getUsername())

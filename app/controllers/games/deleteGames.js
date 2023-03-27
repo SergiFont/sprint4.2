@@ -1,15 +1,13 @@
 const ServerReply = require('../../helpers/ServerReply.js')
 const NoGamesPlayedException = require('./../../helpers/exceptions/NoGamesPlayedException.js')
 const showDevError = require('../../helpers/showDevError.js')
-const PlayersRepositoryMysql = require('./../../entities/repositories/players/PlayersRepositoryMysql.js')
-const GamesRepositoryMysql = require('./../../entities/repositories/games/GamesRepositoryMysql.js')
+const { players } = require('./../../entities/repositories/choosenDb.js')
+const { games } = require('./../../entities/repositories/choosenDb.js')
 
 const deleteGames = async (req, res) => {
     try {
       const userId = req.user.id
       const runner = new ServerReply(res)
-      const games = new GamesRepositoryMysql()
-      const players = new PlayersRepositoryMysql()
   
       const player = await players.findById(userId)
   

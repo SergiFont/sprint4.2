@@ -3,7 +3,7 @@ const Player  = require('./../../entities/Player.js')
 const PlayerNotExistException  = require('./../../helpers/exceptions/PlayerNotExistException.js')
 const PlayerNameTakenException  = require('./../../helpers/exceptions/PlayerNameTakenException.js')
 const showDevError = require('./../../helpers/showDevError.js')
-const PlayersRepositoryMysql = require('./../../entities/repositories/players/PlayersRepositoryMysql.js')
+const { players } = require('./../../entities/repositories/choosenDb.js')
 
 const updatePlayer = async (req, res) => {
     try {
@@ -11,7 +11,6 @@ const updatePlayer = async (req, res) => {
         const {username} = req.query // accesing the value of the key newUsername in the body(x-www-form-urlencoded).
         const runner = new ServerReply(res)
         const newPlayerName = new Player(username)
-        const players = new PlayersRepositoryMysql()
 
         const playerExist = await players.findById(userId)
         if (!playerExist) throw new PlayerNotExistException('You do not have a player created')

@@ -1,11 +1,9 @@
-const PlayersRepositoryMysql = require('./repositories/players/PlayersRepositoryMysql.js')
-const GamesRepositoryMysql = require('./repositories/games/GamesRepositoryMysql.js')
+const { games } = require('./../entities/repositories/choosenDb.js')
+const { players } = require('./../entities/repositories/choosenDb.js')
 
 class Ranking {
 
     async playerRanking(id) {
-        const players = new PlayersRepositoryMysql()
-        const games = new GamesRepositoryMysql()
         const player = await players.findByPlayerId(id)
         const playerName = player.username
         const playerGames = await games.findPlayerGames(player.id)
@@ -22,7 +20,6 @@ class Ranking {
     }
 
     async generalRanking() {
-        const players = new PlayersRepositoryMysql()
         const playerList = await players.findAllPlayers()
         const idList = playerList.map(player => player.id)
 

@@ -1,11 +1,10 @@
 const ServerReply = require('../../helpers/ServerReply.js')
 const showDevError = require('./../../helpers/showDevError.js')
-const PlayersRepositoryMysql = require('./../../entities/repositories/players/PlayersRepositoryMysql.js')
+const { players } = require('./../../entities/repositories/choosenDb.js')
 
 const getPlayers = async (req, res) => {
     try {
       const runner = new ServerReply(res)
-      const players = new PlayersRepositoryMysql()
       const playerList = await players.findAllPlayers()
       runner.sendResponse(200, playerList) // Return the games as JSON
     } catch (error) {

@@ -4,7 +4,7 @@ const UserNotExistException = require('../helpers/exceptions/UserNotExistExcepti
 const NotMatchingPasswordException = require('../helpers/exceptions/NotMatchingPasswordException.js')
 const Token = require('../entities/Token.js')
 const showDevError = require('../helpers/showDevError.js')
-const UsersRepositoryMysql = require('../entities/repositories/users/UsersRepositoryMysql.js')
+const { users } = require('./../entities/repositories/choosenDb.js')
 
 exports.loginUser = async (req, res) => {
     
@@ -12,7 +12,6 @@ exports.loginUser = async (req, res) => {
         const { user } = req.body
         const { password } = req.body
         const runner = new ServerReply(res)
-        const users = new UsersRepositoryMysql()
 
         new Username(user)
         const userExist = await users.findByName(user)
