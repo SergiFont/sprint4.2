@@ -11,7 +11,7 @@ const verifyToken = require('./middlewares/verifyToken.js')
 const createAdmin = require('./helpers/createAdmin.js')
 
 const app = express()
-const port = process.env.DATABASE_PORT
+const port = process.env.SERVER_PORT
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
@@ -20,6 +20,7 @@ app.use(logger)
 app.use('/register', registerRouter)
 app.use('/login', loginRouter)
 
+// TODO añadir middlwware para verificar que se manda un Auth header.
 app.use(verifyToken)
 app.use('/players', playersRouter)
 app.use('/games', gamesRouter)

@@ -5,19 +5,5 @@
     "database": "dicegame",
     "host": "localhost",
     "dialect": "mysql"
-  },
-  "test": {
-    "username": "root",
-    "password": "admin",
-    "database": "dicegame",
-    "host": "localhost",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password": "admin",
-    "database": "dicegame",
-    "host": "localhost",
-    "dialect": "mysql"
   }
 }

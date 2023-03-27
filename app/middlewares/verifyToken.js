@@ -13,11 +13,11 @@ const verifyToken = async (req, res, next) => {
   const authorizationHeader = req.headers.authorization
   const runner = new ServerReply(res)
   
-  if (!authorizationHeader) {
-        throw new AuthorizationHeaderMissingException('Authorization header missing')
-  }
-
+  
   try {
+    if (!authorizationHeader) {
+          throw new AuthorizationHeaderMissingException('Authorization header missing')
+    }
     const token = authorizationHeader.split(' ')[1]
     const decoded = jwt.verify(token, secretKey)
 

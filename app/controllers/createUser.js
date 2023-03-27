@@ -8,9 +8,7 @@ const UsersRepositoryMysql = require('../entities/repositories/users/UsersReposi
 exports.createUser = async (req, res) => {
     
     try {
-        const { user } = req.body
-        const { password } = req.body
-        // aqui se validaria user y password
+        const { user, password } = req.body
         const runner = new ServerReply(res)
         const users = new UsersRepositoryMysql()
         const username = new Username(user)

@@ -8,9 +8,9 @@ const PlayersRepositoryMysql = require('./../../entities/repositories/players/Pl
 const updatePlayer = async (req, res) => {
     try {
         const userId = req.user.id
-        const {newName} = req.query // accesing the value of the key newUsername in the body(x-www-form-urlencoded).
+        const {username} = req.query // accesing the value of the key newUsername in the body(x-www-form-urlencoded).
         const runner = new ServerReply(res)
-        const newPlayerName = new Player(newName)
+        const newPlayerName = new Player(username)
         const players = new PlayersRepositoryMysql()
 
         const playerExist = await players.findById(userId)
