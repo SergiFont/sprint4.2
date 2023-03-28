@@ -14,7 +14,7 @@ const configPlayerRepository = () => {
     if (process.env.DB === 'mysql') return new PlayersRepositoryMysql()
 }
   
-  const users= configUserRepository()
+  const users = configUserRepository()
   const games = configGameRepository()
   const players = configPlayerRepository()
   

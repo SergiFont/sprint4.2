@@ -11,8 +11,7 @@ const createGame = async (req, res) => {
       const newGame = new Game()
       let userHasPlayer = await players.findById(userId)
       if (!userHasPlayer) {
-        await players.createPlayer(userId, 'Anonymous')
-        userHasPlayer = await players.findById(userId)
+        userHasPlayer = await players.createPlayer(userId, 'Anonymous')
       } // checks if the user has a player. If not, creates an anonymous player.
   
       const {dice1, dice2, victory} = newGame.getGame()

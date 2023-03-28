@@ -17,27 +17,25 @@ exports.loginUser = async (req, res) => {
         const userExist = await users.findByName(user)
         if (!userExist) throw new UserNotExistException('Username does not exist')
 
-        const passwordIsValid = await userExist.verifyPassword(password) // esto habrá que modificarlo para ser mas general,
-        // en caso de usar otra base de datos distinta como Mongo.
+        const passwordIsValid = await userExist.verifyPassword(password)
         if (!passwordIsValid) throw new NotMatchingPasswordException('Password does not match')
         
         const token = new Token(userExist.id)
         const userToken = token.getToken()
 
-        let role
-        userExist.role === 0 ? role = 'ADMIN' :
-        userExist.role === 1 ? role = 'PLAYER':
-        role = 'GUEST'
+        const role =
+        userExist.role === 0 ? 'ADMIN' :
+        userExist.role === 1 ? 'PLAYER':
+        'GUEST'
         runner.sendResponse(200, { token: userToken, message: `Welcome Back, ${user}`, role: `user level: ${role}` })
 
     } catch (error) {
         const runner = new ServerReply(res)
+        const errorType = error.constructor.name
         showDevError(error)
-        return  error.constructor.name === 'NotValidUsernameException' ?
-                runner.sendError(400, error.message) :
-                error.constructor.name === 'UserNotExistException' ?
-                runner.sendError(400, error.message) :
-                error.constructor.name === 'NotMatchingPasswordException' ?
+        return  errorType === 'NotValidUsernameException' || 
+                errorType === 'UserNotExistException' || 
+                errorType === 'NotMatchingPasswordException' ?
                 runner.sendError(400, error.message) :
                 runner.sendError(500, 'Server error')
     }
