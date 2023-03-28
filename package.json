@@ -4,17 +4,28 @@
   "description": "sample project for node",
   "main": "app.js",
   "scripts": {
-    "start": "node app/app.js",
-    "dev": "nodemon app/app.js",
+    "start": "set DEV=false&& set DB=mysql&& node ./app/app.js",
+    "dev": "set DEV=true&& set DB=mysql&& nodemon ./app/app.js",
+    "mongo": "set DEV=false&& set DB=mongodb&& node ./app/app.js",
+    "mongo-dev": "set DEV=true&& set DB=mongodb&& nodemon ./app/app.js",
     "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^9.0.2"
+    "basic-auth": "^2.0.1",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-jwt": "^8.4.1",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.29.1",
+    "sequelize-cli": "^6.6.0",
+    "sqlite3": "^5.1.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "jest": "^28.1.1"
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.7"
   }
 }

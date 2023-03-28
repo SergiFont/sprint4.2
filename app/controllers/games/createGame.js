@@ -1,0 +1,29 @@
+const ServerReply = require('../../helpers/ServerReply.js')
+const Game = require('../../entities/Game.js')
+const showDevError = require('../../helpers/showDevError.js')
+const { players } = require('./../../entities/repositories/choosenDb.js')
+const { games } = require('./../../entities/repositories/choosenDb.js')
+
+const createGame = async (req, res) => {
+    try {
+      const userId = req.user.id
+      const runner = new ServerReply(res)
+      const newGame = new Game()
+      let userHasPlayer = await players.findById(userId)
+      if (!userHasPlayer) {
+        userHasPlayer = await players.createPlayer(userId, 'Anonymous')
+      } // checks if the user has a player. If not, creates an anonymous player.
+  
+      const {dice1, dice2, victory} = newGame.getGame()
+      const playerId = userHasPlayer.id
+      const game = await games.createGame(dice1, dice2, victory, playerId)
+      runner.sendResponse(201, game); // Return the newly created game as JSON
+    
+    } catch (error) {
+      const runner = new ServerReply(res)
+      showDevError(error)
+      runner.sendError(500, 'Server error') // Return an error response if something goes wrong
+    }
+  }
+
+  module.exports = createGame
